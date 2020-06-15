@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    /*rem计算根元素字体大小 */
+    init();
+
+    function init(){
+        var docEl = document.documentElement,
+            resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+            detect = function(){
+                detectOrient();
+            };
+
+        if (!document.addEventListener) return;
+        window.addEventListener(resizeEvt, detect, false);
+        document.addEventListener('DOMContentLoaded', detect, false);
+    }
+
+    function detectOrient() {
+        var cw = document.documentElement.clientWidth;
+        var _Width = 0,
+            _Height = 0;
+
+        sw = window.screen.width;
+        sh = window.screen.height;
+        _Width = sw < sh ? sw : sh;
+        _Height = sw >= sh ? sw : sh;
+
+        if(cw == _Width) {
+            console.log("竖屏")
+            // 竖屏
+            setFont(true);
+            //隐藏横屏dom
+            return;
+        }
+        if(cw == _Height){
+            // 横屏
+            console.log("竖屏")
+            setFont(false);
+            //隐藏竖屏dom
+            return;
+        }
+    }
+
+    // @ori boolean 屏幕方向，默认竖屏 true
+    function setFont(ori){
+        var docEl = document.documentElement;
+        var clientWidth = docEl.clientWidth;
+        if (!clientWidth) return;
+
+        //横屏
+        if (!ori) {
+            if (clientWidth < 1334) {
+                docEl.style.fontSize = 100 * (clientWidth / 1334) + 'px';
+            } else {
+                docEl.style.fontSize = '100px';
+            }
+        }else{
+        //竖屏
+            if (clientWidth < 750) {
+                docEl.style.fontSize = 100 * (clientWidth / 750) + 'px';
+            } else {
+                docEl.style.fontSize = '100px';
+            }
+        }
+    }
+</script>
+</html>
